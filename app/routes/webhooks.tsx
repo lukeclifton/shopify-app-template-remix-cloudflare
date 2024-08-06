@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { authenticate } from "../shopify.server";
 import db from "../db.server";
 
