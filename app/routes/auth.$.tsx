@@ -1,8 +1,7 @@
 import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { authenticate } from "../shopify.server";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await authenticate.admin(request);
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  await context.shopify.authenticate.admin(request);
 
   return null;
 };

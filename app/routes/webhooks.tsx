@@ -1,9 +1,8 @@
 import type { ActionFunctionArgs } from "@remix-run/cloudflare";
-import { authenticate } from "../shopify.server";
-import db from "../db.server";
+import {KVSessionStorage} from '@shopify/shopify-app-session-storage-kv';
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const { topic, shop, session, admin } = await authenticate.webhook(request);
+export const action = async ({ request, context }: ActionFunctionArgs) => {
+  const { topic, shop, session, admin } = await context.shopify.authenticate.webhook(request);
 
   if (!admin && topic !== 'SHOP_REDACT') {
     // The admin context isn't returned if the webhook fired after a shop was uninstalled.
@@ -17,7 +16,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   switch (topic) {
     case "APP_UNINSTALLED":
       if (session) {
-        await db.session.deleteMany({ where: { shop } });
+        const sessionStorage = new KVSessionStorage(context.cloudflare.env.SHOPIFY_SESSIONS);
+        const sessions = await sessionStorage.findSessionsByShop(shop);
+        await sessionStorage.deleteSessions(sessions.map((session) => session.id));
       }
 
       break;

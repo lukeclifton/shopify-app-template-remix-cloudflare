@@ -14,20 +14,18 @@ import {
 import polarisTranslations from "@shopify/polaris/locales/en.json";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 
-import { login } from "../../shopify.server";
-
 import { loginErrorMessage } from "./error.server";
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const errors = loginErrorMessage(await login(request));
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const errors = loginErrorMessage(await context.shopify.login(request));
 
   return json({ errors, polarisTranslations });
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const errors = loginErrorMessage(await login(request));
+export const action = async ({ request, context }: ActionFunctionArgs) => {
+  const errors = loginErrorMessage(await context.shopify.login(request));
 
   return json({
     errors,
