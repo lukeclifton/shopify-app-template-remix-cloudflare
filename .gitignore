@@ -11,8 +11,12 @@ database.sqlite
 .env
 .env.*
 .dev.vars
-
 package-lock.json
 yarn.lock
-
+pnpm-lock.yaml
 /extensions/*/dist
+
+# Ignore shopify files created during app dev
+.shopify/*
+.shopify.lock
+

@@ -1,4 +1,5 @@
-# Shopify App Template - Remix (Cloudflare Pages)
+# Shopify App Template - Remix - Cloudflare Pages Deployment Ready
+
 
 This is a template for building a [Shopify app](https://shopify.dev/docs/apps/getting-started) using the [Remix](https://remix.run) framework.
 

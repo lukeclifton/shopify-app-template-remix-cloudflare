@@ -20,7 +20,7 @@ export default async function handleRequest(
   loadContext: AppLoadContext
 ) {
   loadContext.shopify.addDocumentResponseHeaders(request, responseHeaders);
-  
+
   const body = await renderToReadableStream(
     <RemixServer context={remixContext} url={request.url} />,
     {
